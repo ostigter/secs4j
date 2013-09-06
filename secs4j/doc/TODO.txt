@@ -1,0 +1,32 @@
+TODO
+====
+
+
+High priority
+
+* Fix conversion of bytes to negative integers less than -256.
+* Implement Control State model
+* Change to PeerGroup's SML format
+
+
+Normal priority
+
+* Basic test application (send/receive messages)
+* Fully implement Communication State Model
+* Handle S1F3 Select Equipment Status (SSR)
+* Handle S2F29 Equipment Constant Namelist Request (ECNR)
+* Handle S2F31 Time and Date Set Request (DTS)
+* Handle S1F11 Status Variable Namelist Request (SVNR)
+* Handle S5F5 List Alarm Request (LAR)
+* Handle S5F7 List Enabled Alarm Request (LEAR)
+* Variables (VIDs)
+* Data collection (reports and collection events)
+* Large message support
+* Trace log file
+
+
+Low priority
+
+* Alarms
+* Objects
+* Multiple sessions
