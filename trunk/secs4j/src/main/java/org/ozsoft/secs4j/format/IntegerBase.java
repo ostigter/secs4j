@@ -113,7 +113,23 @@ public class IntegerBase implements Data<List<Long>> {
         if (data.length != size) {
             throw new IllegalArgumentException(String.format("Invalid %s length: %d bytes", name, data.length));
         }
-        addValue((isSigned) ? ConversionUtils.bytesToSignedInteger(data) : ConversionUtils.bytesToUnsignedInteger(data));
+        //TODO: Find difference in signed integer conversion algorithms.
+//      addValue((isSigned) ? ConversionUtils.bytesToSignedInteger(data) : ConversionUtils.bytesToUnsignedInteger(data));
+        if (isSigned) {
+            if (size == I1.SIZE) {
+                addValue(ConversionUtils.bytesToI1(data));
+            } else if (size == I2.SIZE) {
+                addValue(ConversionUtils.bytesToI2(data));
+            } else if (size == I4.SIZE) {
+                addValue(ConversionUtils.bytesToI4(data));
+            } else if (size == I8.SIZE) {
+                addValue(ConversionUtils.bytesToI8(data));
+            } else {
+                throw new IllegalArgumentException("Invalid byte buffer length for integer");
+            }
+        } else { // unsigned
+            addValue(ConversionUtils.bytesToUnsignedInteger(data));
+        }
     }
 
     @Override
