@@ -3,13 +3,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ozsoft.secs</groupId>
-    <artifactId>secs</artifactId>
-    <version>0.1</version>
+    <groupId>org.ozsoft.secs4j</groupId>
+    <artifactId>secs4j</artifactId>
+    <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>secs</name>
-    <description>Open source SECS-II/GEM library in Java</description>
+    <description>Open source SECS/GEM library in Java</description>
 
     <inceptionYear>2013</inceptionYear>
     <developers>
