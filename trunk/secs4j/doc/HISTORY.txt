@@ -4,6 +4,6 @@ HISTORY
 Release     Date            Description
 ---------------------------------------------------------------------------------------------------
 
-0.1         ?               First release!
+0.1         09-Sep-2013     First release!
                              
 -           06-Sep-2013     Initial project import from incubator.
