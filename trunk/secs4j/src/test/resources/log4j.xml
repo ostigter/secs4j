@@ -8,7 +8,7 @@
         </layout>
     </appender>
 
-    <logger name="org.ozsoft.secs">
+    <logger name="org.ozsoft.secs4j">
         <level value="TRACE"/>
     </logger>
 
