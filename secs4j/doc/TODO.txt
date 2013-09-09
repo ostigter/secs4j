@@ -4,7 +4,6 @@ TODO
 
 High priority
 
-* Fix conversion of bytes to negative integers less than -256.
 * Implement Control State model
 * Change to PeerGroup's SML format
 

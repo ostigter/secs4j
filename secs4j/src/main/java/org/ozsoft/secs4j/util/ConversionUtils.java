@@ -42,6 +42,14 @@ public abstract class ConversionUtils {
         return data;
     }
     
+    /**
+     * Converts a byte array into a signed integer.
+     * 
+     * @param data
+     *            The byte array.
+     * 
+     * @return The signed integer.
+     */
     public static long bytesToSignedInteger(byte[] data) {
         final int length = data.length;
         long value = 0L;
@@ -51,7 +59,58 @@ public abstract class ConversionUtils {
         }
         return value;
     }
+    
+    /**
+     * Converts a byte array into a 1-byte signed integer.
+     * 
+     * @param data The byte array.
+     * 
+     * @return The integer value.
+     */
+    public static byte bytesToI1(byte[] data) {
+        return (byte) (data[0] & 0xff);
+    }
+    
+    /**
+     * Converts a byte array into a 2-byte signed integer.
+     * 
+     * @param data The byte array.
+     * 
+     * @return The integer value.
+     */
+    public static int bytesToI2(byte[] data) {
+        return (short) (((short) (data[0] & 0xff)) << 8) | ((short) (data[1] & 0xff));
+    }
+    
+    /**
+     * Converts a byte array into a 4-byte signed integer.
+     * 
+     * @param data The byte array.
+     * 
+     * @return The integer value.
+     */
+    public static int bytesToI4(byte[] data) {
+        return ((data[0] & 0xff) << 24) | ((data[1] & 0xff) << 16) | ((data[2] & 0xff) << 8) | ((data[3] & 0xff));
+    }
 
+    /**
+     * Converts a byte array into a 8-byte signed integer.
+     * 
+     * @param data The byte array.
+     * 
+     * @return The integer value.
+     */
+    public static long bytesToI8(byte[] data) {
+        return (long) (((long) (data[0] & 0xff)) << 56) | (((long) (data[1] & 0xff)) << 48) | (((long) (data[2] & 0xff)) << 40) | (((long) (data[3] & 0xff)) << 32) | (((long) (data[4] & 0xff)) << 24) | (((long) (data[5] & 0xff)) << 16) | (((long) (data[6] & 0xff)) << 8) | (((long) (data[7] & 0xff)));
+    }
+
+    /**
+     * Converts a byte array to an unsigned integer.
+     * 
+     * @param data The byte array.
+     * 
+     * @return The unsigned value.
+     */
     public static long bytesToUnsignedInteger(byte[] data) {
         final int length = data.length;
         long value = 0L;
