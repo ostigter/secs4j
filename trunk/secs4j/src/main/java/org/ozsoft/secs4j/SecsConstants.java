@@ -39,23 +39,20 @@ public interface SecsConstants {
     /** Default port. */
     int DEFAULT_PORT = 5555;
     
-    /** Default active state (true means active, false means passive). */
-    boolean IS_ACTIVE = false;
-    
     /** Default device ID (session ID). */
     int DEFAULT_DEVICE_ID = 1;
     
-    /** T3 (Reply) timeout in miliseconds. */
-    int DEFAULT_T3 = 120000; // 2 minutes
+    /** T3 (Reply) timeout in seconds. */
+    int DEFAULT_T3 = 120;
     
-    /** T5 (Connect Separation) timeout in miliseconds. */
-    int DEFAULT_T5 = 10000; // 10 seconds
+    /** T5 (Connect Separation) timeout in seconds. */
+    int DEFAULT_T5 = 10;
     
-    /** T6 (Control Transaction) timeout in miliseconds. */
-    int DEFAULT_T6 = 5000; // 5 seconds
+    /** T6 (Control Transaction) timeout in seconds. */
+    int DEFAULT_T6 = 5;
     
-    /** T7 (Connect Idle) timeout in miliseconds. */
-    int DEFAULT_T7 = 10000; // 10 seconds
+    /** T7 (Connect Idle) timeout in seconds. */
+    int DEFAULT_T7 = 10;
     
     /** SECS header length in bytes. */
     int HEADER_LENGTH = 10;

@@ -429,7 +429,7 @@ public class SecsEquipment {
                     }
                 }
             }
-            if (replyMessage == null && (System.currentTimeMillis() - startTime) > t3) {
+            if (replyMessage == null && (System.currentTimeMillis() - startTime) > (t3 * 1000L)) {
                 // T3 transaction timeout.
                 String msg = String.format("T3 timeout for request message %s with transaction ID %d", primaryMessage.getType(), transactionId); 
                 LOG.warn(msg);
@@ -758,7 +758,7 @@ public class SecsEquipment {
                         handleConnection();
                     } catch (IOException e) {
                         LOG.debug(String.format("Failed to connect to equipment '%s' on port %d", host, port));
-                        SecsEquipment.sleep(t5);
+                        SecsEquipment.sleep(t5 * 1000L);
                     }
                 } else {
                     SecsEquipment.sleep(POLL_INTERVAL);
