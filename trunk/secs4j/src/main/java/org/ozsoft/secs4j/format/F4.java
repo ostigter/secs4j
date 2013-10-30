@@ -170,20 +170,14 @@ public class F4 implements Data<List<Float>> {
     public String toSml() {
         int length = length();
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%s:%d", NAME, length));
+        sb.append(String.format("<%s", NAME));
         if (length > 0) {
-            boolean first = true;
-            sb.append(" {");
             for (float value : values) {
-                if (!first) {
-                    sb.append(' ');
-                } else {
-                    first = false;
-                }
+                sb.append(' ');
                 sb.append(value);
             }
-            sb.append('}');
         }
+        sb.append('>');
         return sb.toString();
     }
 

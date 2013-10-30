@@ -182,17 +182,13 @@ public class B implements Data<List<Integer>> {
     public String toSml() {
         StringBuilder sb = new StringBuilder();
         int length = length();
-        sb.append(String.format("B:%d", length));
+        sb.append("<B");
         if (length > 0) {
-            sb.append(" {");
             for (int i = 0; i < length; i++) {
-                if (i > 0) {
-                    sb.append(' ');
-                }
-                sb.append(String.format("%02x", bytes.get(i)));
+                sb.append(String.format(" 0x%02x", bytes.get(i)));
             }
-            sb.append('}');
         }
+        sb.append('>');
         return sb.toString();
     }
 

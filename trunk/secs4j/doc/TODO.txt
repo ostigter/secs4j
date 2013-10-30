@@ -2,12 +2,6 @@ TODO
 ====
 
 
-High priority
-
-* Implement Control State model
-* Change to PeerGroup's SML format
-
-
 Normal priority
 
 * Basic test application (send/receive messages)

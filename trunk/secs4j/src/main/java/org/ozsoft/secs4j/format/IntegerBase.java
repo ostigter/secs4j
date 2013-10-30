@@ -193,20 +193,14 @@ public class IntegerBase implements Data<List<Long>> {
     public String toSml() {
         int length = length();
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%s:%d", name, length));
+        sb.append(String.format("<%s", name));
         if (length > 0) {
-            boolean first = true;
-            sb.append(" {");
             for (long value : values) {
-                if (!first) {
-                    sb.append(' ');
-                } else {
-                    first = false;
-                }
+                sb.append(' ');
                 sb.append(value);
             }
-            sb.append('}');
         }
+        sb.append('>');
         return sb.toString();
     }
 

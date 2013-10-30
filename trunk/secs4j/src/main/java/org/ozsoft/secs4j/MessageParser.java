@@ -80,6 +80,9 @@ public class MessageParser {
     /** Byte position of the System Bytes (Transaction ID) field. */
     private static final int POS_SYSTEMBYTES = 6;
     
+    /** Minimal length of an SML value. */
+    private static final int MIN_SML_LENGTH = 3;
+    
     /**
      * Parses a SECS message.
      * 
@@ -396,34 +399,47 @@ public class MessageParser {
     }
     
     public static Data<?> parseData(String text) throws SecsParseException {
-        if (text == null || text.isEmpty()) {
+        if (text == null) {
             throw new SecsParseException("Empty data item");
         }
+    	
+    	text = text.trim();
+        if (text.length() < MIN_SML_LENGTH) {
+            throw new SecsParseException("Empty data item or invalid length");
+        }
         
-        boolean inValue = false;
+        if (text.charAt(0) != '<' || text.charAt(text.length() - 1) != '>') {
+            throw new SecsParseException("Invalid data item format");
+        }
+        
         String type = null;
         String value = null;
+        boolean inValue = false;
         StringBuilder sb = new StringBuilder();
         int depth = 0;
-        for (int i = 0; i < text.length(); i++) {
+        for (int i = 1; i < text.length(); i++) {
             char c = text.charAt(i);
             if (!inValue) {
                 // Determining type.
-                if (c == '{') {
+                if (c == ' ') {
                     // Type found; start of value.
                     type = sb.toString().trim();
                     inValue = true;
+                    sb.delete(0, sb.length());
+                } else if (c == '>') {
+                    type = sb.toString().trim();
+                    value = "";
                     sb.delete(0, sb.length());
                 } else {
                     sb.append(c);
                 }
             } else {
                 // Determining value.
-                if (c == '{') {
+                if (c == '<') {
                     // Inner nesting; ignore.
                     depth++;
                     sb.append(c);
-                } else if (c == '}') {
+                } else if (c == '>') {
                     if (depth > 0) {
                         // Still in nested part; ignore.
                         depth--;
@@ -452,7 +468,11 @@ public class MessageParser {
             B b = new B();
             try {
                 for (String s : value.split("\\s")) {
-                    b.add(Byte.parseByte(s));
+                	if (s.startsWith("0x")) {
+                        b.add(Byte.parseByte(s.substring(2)));
+                	} else {
+                        b.add(Byte.parseByte(s));
+                	}
                 }
             } catch (NumberFormatException e) {
                 throw new SecsParseException("Invalid B value: " + value);
@@ -467,19 +487,133 @@ public class MessageParser {
                 throw new SecsParseException("Invalid BOOLEAN value: " + value);
             }
         } else if (type.equals("A")) {
+        	if (!value.isEmpty()) {
+            	if (value.charAt(0) != '\"' || value.charAt(value.length() - 1) != '\"') {
+                    throw new SecsParseException("Invalid A format");
+            	}
+            	value = value.substring(1,  value.length() - 1);
+        	}
             data = new A(value);
+        } else if (type.equals("U1")) {
+            U1 u1 = new U1();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                u1.addValue(Integer.parseInt(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid U1 value: " + s);
+		            }
+	            }
+            }
+            data = u1;
         } else if (type.equals("U2")) {
-            try {
-                data = new U2(Integer.parseInt(value));
-            } catch (NumberFormatException e) {
-                throw new SecsParseException("Invalid U2 value: " + value);
+            U2 u2 = new U2();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                u2.addValue(Integer.parseInt(s));
+		            } catch (NumberFormatException e) {
+		                throw new SecsParseException("Invalid U2 value: " + s);
+		            }
+	            }
             }
+            data = u2;
         } else if (type.equals("U4")) {
-            try {
-                data = new U4(Long.parseLong(value));
-            } catch (NumberFormatException e) {
-                throw new SecsParseException("Invalid U4 value: " + value);
+            U4 u4 = new U4();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                u4.addValue(Long.parseLong(s));
+		            } catch (NumberFormatException e) {
+		                throw new SecsParseException("Invalid U4 value: " + s);
+		            }
+	            }
             }
+            data = u4;
+        } else if (type.equals("U8")) {
+            U8 u8 = new U8();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                u8.addValue(Long.parseLong(s));
+		            } catch (NumberFormatException e) {
+		                throw new SecsParseException("Invalid U8 value: " + s);
+		            }
+	            }
+            }
+            data = u8;
+        } else if (type.equals("I1")) {
+            I1 i1 = new I1();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                i1.addValue(Integer.parseInt(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid I1 value: " + s);
+		            }
+	            }
+            }
+            data = i1;
+        } else if (type.equals("I2")) {
+            I2 i2 = new I2();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                i2.addValue(Integer.parseInt(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid I2 value: " + s);
+		            }
+	            }
+            }
+            data = i2;
+        } else if (type.equals("I4")) {
+            I4 i4 = new I4();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                i4.addValue(Integer.parseInt(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid I4 value: " + s);
+		            }
+	            }
+            }
+            data = i4;
+        } else if (type.equals("I8")) {
+            I8 i8 = new I8();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                i8.addValue(Integer.parseInt(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid I8 value: " + s);
+		            }
+	            }
+            }
+            data = i8;
+        } else if (type.equals("F4")) {
+            F4 f4 = new F4();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                f4.addValue(Float.parseFloat(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid F4 value: " + s);
+		            }
+	            }
+            }
+            data = f4;
+        } else if (type.equals("F8")) {
+            F8 f8 = new F8();
+            if (!value.isEmpty()) {
+	            for (String s : value.split("\\s")) {
+		            try {
+		                f8.addValue(Double.parseDouble(s));
+		            } catch (Exception e) {
+		                throw new SecsParseException("Invalid F8 value: " + s);
+		            }
+	            }
+            }
+            data = f8;
         } else {
             throw new SecsParseException("Invalid data type: " + type);
         }
@@ -487,51 +621,57 @@ public class MessageParser {
         return data;
     }
     
-    //TODO: Refactor merging parseL(String) into parse(String).
     private static L parseL(String text) throws SecsParseException {
+    	//TODO: Check format (parentheses)
         L l = new L();
-        if (!text.isEmpty()) {
-            boolean inValue = false;
-            String type = null;
-            String value = null;
-            int depth = 0;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < text.length(); i++) {
-                char c = text.charAt(i);
-                if (!inValue) {
-                    // Determining type.
-                    if (c == '{') {
-                        // Type found; start of value.
-                        type = sb.toString().trim();
-                        inValue = true;
-                        sb.delete(0, sb.length());
-                    } else {
+        boolean inType = false;
+        boolean inValue = false;
+        String type = null;
+        String value = null;
+        int depth = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (!inValue) {
+            	if (!inType) {
+            		if (c == '<') {
+            			inType = true;
+            		}
+            	}
+            	// Determining type.
+            	else if (c == ' ') {
+                    // Type found; start of value.
+                    type = sb.toString().trim();
+                    inType = false;
+                    inValue = true;
+                    sb.delete(0, sb.length());
+                } else {
+                    sb.append(c);
+                }
+            } else {
+                // Determining value.
+                if (c == '<') {
+                    // Inner nesting; ignore.
+                    depth++;
+                    sb.append(c);
+                } else if (c == '>') {
+                    if (depth > 0) {
+                        // Still in nested part; ignore.
+                        depth--;
                         sb.append(c);
+                    } else {
+                        // Value found.
+                        value = sb.toString();
+                        l.addItem(parseData(type, value));
+                        inValue = false;
+                        sb.delete(0, sb.length());
                     }
                 } else {
-                    // Determining value.
-                    if (c == '{') {
-                        // Inner nesting; ignore.
-                        depth++;
-                        sb.append(c);
-                    } else if (c == '}') {
-                        if (depth > 0) {
-                            // Still in nested part; ignore.
-                            depth--;
-                            sb.append(c);
-                        } else {
-                            // Value found.
-                            value = sb.toString();
-                            l.addItem(parseData(type, value));
-                            inValue = false;
-                            sb.delete(0, sb.length());
-                        }
-                    } else {
-                        sb.append(c);
-                    }
+                    sb.append(c);
                 }
             }
         }
+
         return l;
     }
 
