@@ -122,15 +122,19 @@ public class L implements Data<List<Data<?>>> {
 
     @Override
     public String toSml() {
-        StringBuilder sb = new StringBuilder();
-        int length = items.size();
-        sb.append(String.format("L:%d {", length));
-        for (int i = 0; i < length; i++) {
-            sb.append('\n');
-            sb.append(items.get(i).toSml());
-        }
-        sb.append("\n}");
-        return sb.toString();
+    	if (length() == 0) {
+    		return "<L>";
+    	} else {
+	        StringBuilder sb = new StringBuilder();
+	        int length = items.size();
+	        sb.append(String.format("<L [%d]", length));
+	        for (int i = 0; i < length; i++) {
+	            sb.append('\n');
+	            sb.append(items.get(i).toSml());
+	        }
+	        sb.append("\n>");
+	        return sb.toString();
+    	}
     }
     
     @Override

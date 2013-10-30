@@ -37,10 +37,10 @@ public class BOOLEAN implements Data<Boolean> {
     public static final byte TRUE = 0x01;
 
     /** SML value for FALSE. */
-    public static final String FALSE_SML = "BOOLEAN {False}";
+    public static final String FALSE_SML = "<BOOLEAN False>";
 
     /** SML value for TRUE. */
-    public static final String TRUE_SML = "BOOLEAN {True}";
+    public static final String TRUE_SML = "<BOOLEAN True>";
 
     /** The boolean value. */
     private boolean value;

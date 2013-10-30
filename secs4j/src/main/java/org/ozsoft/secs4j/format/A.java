@@ -106,7 +106,11 @@ public class A implements Data<String> {
 
     @Override
     public String toSml() {
-        return String.format("A:%d {%s}", value.length(), value);
+    	if (length() == 0) {
+    		return "<A>";
+    	} else {
+    		return String.format("<A \"%s\">", value);
+    	}
     }
     
     @Override

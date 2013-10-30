@@ -7,10 +7,9 @@
     <artifactId>secs4j</artifactId>
     <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <name>secs</name>
+    
+    <name>secs4j</name>
     <description>Open source SECS/GEM library in Java</description>
-
     <inceptionYear>2013</inceptionYear>
     <developers>
         <developer>
