@@ -16,7 +16,7 @@ The secs4j library strives to comply with the following SEMI standards:
 Basic SECS/GEM communication has been implemented, but far more work is required to at least
 comply with the minimal set of implementation requirements set by the related SEMI standards.
 
---- THIS PROJECT IS CURRENTLY INACTIVE ---
+--- THIS PROJECT IS CURRENTLY INACTIVE (DEAD) ---
 
 ## Development
 
@@ -24,4 +24,4 @@ This Java project has a Maven structure.
 
 ## Disclaimer
 
-This project is under construction. Use at your own risk!
+This project inactive (dead) and for educational purposes only. Use at your own risk!
